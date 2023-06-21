@@ -12,9 +12,6 @@ Traefik will automatically request SSL certificates for services configured to u
 version: '3.6'
 
 services:
-# Reverse proxy top-level container
-#
-
   nginx:
     image: nginx:alpine
     labels:
@@ -36,7 +33,6 @@ services:
     networks:
       - traefik
 
-
 networks:
   traefik:
     name: traefik_traefik
@@ -49,8 +45,8 @@ Note that services are required to expose a plain HTTP port. It is possible to c
 
 ## Used by
 
-  * [Metagenome](meta-genome.org)
-  * [ManyFEWS](floodwarnings.durham.ac.uk)
+  * [Metagenome](https://meta-genome.org)
+  * [ManyFEWS](https://floodwarnings.durham.ac.uk)
 
 ## Durham University Project Team
 
