@@ -1,0 +1,39 @@
+version: '3.6'
+
+services:
+# Reverse proxy top-level container
+#
+  traefik:
+    container_name: traefik
+    image: traefik
+    ports:
+      - "80:80/tcp"
+      - "443:443/tcp"
+    restart: unless-stopped
+    volumes:
+      - ./traefik/acme.json:/acme.json
+      - ./traefik/traefik.toml:/traefik.toml
+      - ./traefik/conf/:/conf/:ro
+    networks:
+      - default
+      - traefik
+
+  dockerproxy:
+    container_name: dockerproxy
+    image: tecnativa/docker-socket-proxy
+    restart: unless-stopped
+    environment:
+      CONTAINERS: 1
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    networks:
+      - traefik
+    expose:
+      - "2375"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+
+networks:
+  default:
+  internal:
+  traefik:
